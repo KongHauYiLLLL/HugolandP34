@@ -1,14 +1,12 @@
 export interface TriviaQuestion {
   id: string;
   question: string;
-  type: 'multiple-choice' | 'type-answer' | 'slider' | 'reorder-words';
+  type: 'multiple-choice' | 'type-answer' | 'slider';
   options?: string[];
-  correctAnswer: number | string | number[];
+  correctAnswer: number | string;
   category: string;
   difficulty: 'easy' | 'medium' | 'hard';
   sliderRange?: { min: number; max: number };
-  wordsToReorder?: string[];
-  hint?: string;
 }
 
 export const triviaQuestions: TriviaQuestion[] = [
@@ -148,38 +146,6 @@ export const triviaQuestions: TriviaQuestion[] = [
     type: 'type-answer',
     correctAnswer: 'antarctica',
     category: 'Geography',
-    difficulty: 'easy'
-  },
-
-  // Language - Reorder Words
-  {
-    id: '16',
-    question: 'Arrange these words to form a common English phrase:',
-    type: 'reorder-words',
-    wordsToReorder: ['good', 'morning'],
-    correctAnswer: [0, 1], // indices in correct order
-    hint: 'A greeting used in the early part of the day',
-    category: 'Language',
-    difficulty: 'easy'
-  },
-  {
-    id: '17',
-    question: 'Arrange these words to form a common English phrase:',
-    type: 'reorder-words',
-    wordsToReorder: ['you', 'thank'],
-    correctAnswer: [1, 0], // "thank you"
-    hint: 'An expression of gratitude',
-    category: 'Language',
-    difficulty: 'easy'
-  },
-  {
-    id: '18',
-    question: 'Arrange these words to form a common English phrase:',
-    type: 'reorder-words',
-    wordsToReorder: ['night', 'good'],
-    correctAnswer: [1, 0], // "good night"
-    hint: 'A farewell greeting used before sleep',
-    category: 'Language',
     difficulty: 'easy'
   },
 
@@ -519,28 +485,6 @@ export const triviaQuestions: TriviaQuestion[] = [
     difficulty: 'medium'
   },
 
-  // Medium Language - Reorder Words
-  {
-    id: '57',
-    question: 'Arrange these words to form a common English phrase:',
-    type: 'reorder-words',
-    wordsToReorder: ['very', 'much', 'thank', 'you'],
-    correctAnswer: [2, 3, 1, 0], // "thank you very much"
-    hint: 'A polite way to express strong gratitude',
-    category: 'Language',
-    difficulty: 'medium'
-  },
-  {
-    id: '58',
-    question: 'Arrange these words to form a common English phrase:',
-    type: 'reorder-words',
-    wordsToReorder: ['to', 'you', 'nice', 'meet'],
-    correctAnswer: [2, 1, 3, 0], // "nice to meet you"
-    hint: 'Something you say when meeting someone for the first time',
-    category: 'Language',
-    difficulty: 'medium'
-  },
-
   // HARD QUESTIONS - For advanced players
   
   // Hard Math
@@ -614,18 +558,6 @@ export const triviaQuestions: TriviaQuestion[] = [
     type: 'type-answer',
     correctAnswer: 'canberra',
     category: 'Geography',
-    difficulty: 'hard'
-  },
-
-  // Hard Language - Reorder Words
-  {
-    id: '68',
-    question: 'Arrange these words to form a common English phrase:',
-    type: 'reorder-words',
-    wordsToReorder: ['the', 'of', 'time', 'nick'],
-    correctAnswer: [2, 1, 3, 0], // "nick of time"
-    hint: 'At the last possible moment',
-    category: 'Language',
     difficulty: 'hard'
   },
 
@@ -756,7 +688,7 @@ export const getQuestionByZone = (zone: number): TriviaQuestion => {
   }
 };
 
-export const checkAnswer = (question: TriviaQuestion, userAnswer: string | number | number[]): boolean => {
+export const checkAnswer = (question: TriviaQuestion, userAnswer: string | number): boolean => {
   if (question.type === 'multiple-choice') {
     return userAnswer === question.correctAnswer;
   } else if (question.type === 'slider') {
@@ -765,11 +697,6 @@ export const checkAnswer = (question: TriviaQuestion, userAnswer: string | numbe
     const correctNum = Number(question.correctAnswer);
     const userNum = Number(userAnswer);
     return Math.abs(userNum - correctNum) <= tolerance;
-  } else if (question.type === 'reorder-words') {
-    // Check if the order matches the correct answer
-    const userOrder = userAnswer as number[];
-    const correctOrder = question.correctAnswer as number[];
-    return JSON.stringify(userOrder) === JSON.stringify(correctOrder);
   } else {
     // Type answer - normalize both strings for comparison
     const normalizedUserAnswer = String(userAnswer).toLowerCase().trim();

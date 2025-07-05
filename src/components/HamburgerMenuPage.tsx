@@ -211,29 +211,29 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
 
   // Main menu page
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Page Header */}
       <div className="text-center">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">🍔 Game Menu</h1>
-        <p className="text-gray-300">Access special features and advanced settings</p>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">🍔 Game Menu</h1>
+        <p className="text-gray-300 text-sm sm:text-base">Access special features and advanced settings</p>
       </div>
 
       {/* Menu Grid - Responsive */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
         {menuItems.map((item) => {
           const Icon = item.icon;
           return (
             <button
               key={item.id}
               onClick={() => setActiveSection(item.id as any)}
-              className={`p-4 sm:p-6 bg-gradient-to-br ${item.bgColor} rounded-lg border-2 ${item.borderColor} hover:scale-105 transition-all duration-200 text-left group shadow-lg`}
+              className={`p-3 sm:p-4 md:p-6 bg-gradient-to-br ${item.bgColor} rounded-lg border-2 ${item.borderColor} hover:scale-105 transition-all duration-200 text-left group shadow-lg`}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <Icon className={`w-6 h-6 sm:w-8 sm:h-8 ${item.color} group-hover:scale-110 transition-transform`} />
-                <h3 className="text-white font-bold text-sm sm:text-lg">{item.name}</h3>
+              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                <Icon className={`w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 ${item.color} group-hover:scale-110 transition-transform`} />
+                <h3 className="text-white font-bold text-sm sm:text-base md:text-lg">{item.name}</h3>
               </div>
               
-              <p className="text-gray-300 text-xs sm:text-sm mb-3">{item.description}</p>
+              <p className="text-gray-300 text-xs sm:text-sm mb-2 sm:mb-3">{item.description}</p>
               
               <div className="bg-black/30 p-2 rounded-lg">
                 <p className={`text-xs font-semibold ${item.color}`}>{item.status}</p>
@@ -247,22 +247,22 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       {gameState.gardenOfGrowth.isPlanted && (
         <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 p-4 sm:p-6 rounded-lg border border-green-500/30">
           <div className="flex items-center gap-3 mb-4">
-            <Sprout className="w-6 h-6 text-green-400" />
-            <h3 className="text-green-400 font-bold text-lg">🌱 Your Garden</h3>
+            <Sprout className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
+            <h3 className="text-green-400 font-bold text-base sm:text-lg">🌱 Your Garden</h3>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <div className="text-center">
-              <p className="text-green-300 font-semibold">Growth</p>
-              <p className="text-white text-xl font-bold">{gameState.gardenOfGrowth.growthCm.toFixed(1)}cm</p>
+              <p className="text-green-300 font-semibold text-sm">Growth</p>
+              <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth.growthCm.toFixed(1)}cm</p>
             </div>
             <div className="text-center">
-              <p className="text-blue-300 font-semibold">Stat Bonus</p>
-              <p className="text-white text-xl font-bold">+{gameState.gardenOfGrowth.totalGrowthBonus.toFixed(1)}%</p>
+              <p className="text-blue-300 font-semibold text-sm">Stat Bonus</p>
+              <p className="text-white text-lg sm:text-xl font-bold">+{gameState.gardenOfGrowth.totalGrowthBonus.toFixed(1)}%</p>
             </div>
             <div className="text-center">
-              <p className="text-cyan-300 font-semibold">Water Left</p>
-              <p className="text-white text-xl font-bold">{gameState.gardenOfGrowth.waterHoursRemaining.toFixed(1)}h</p>
+              <p className="text-cyan-300 font-semibold text-sm">Water Left</p>
+              <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth.waterHoursRemaining.toFixed(1)}h</p>
             </div>
           </div>
           
@@ -273,7 +273,7 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
                 style={{ width: `${Math.min((gameState.gardenOfGrowth.growthCm / gameState.gardenOfGrowth.maxGrowthCm) * 100, 100)}%` }}
               />
             </div>
-            <p className="text-center text-gray-300 text-sm mt-2">
+            <p className="text-center text-gray-300 text-xs sm:text-sm mt-2">
               Progress to maximum growth ({gameState.gardenOfGrowth.maxGrowthCm}cm)
             </p>
           </div>
@@ -282,26 +282,26 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
 
       {/* Quick Stats Summary */}
       <div className="bg-black/30 p-4 sm:p-6 rounded-lg border border-gray-600/50">
-        <h3 className="text-white font-bold text-lg mb-4">📊 Quick Overview</h3>
+        <h3 className="text-white font-bold text-base sm:text-lg mb-4">📊 Quick Overview</h3>
         
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           <div className="text-center">
-            <p className="text-gray-400 text-sm">Zone</p>
-            <p className="text-white text-xl font-bold">{gameState.zone}</p>
+            <p className="text-gray-400 text-xs sm:text-sm">Zone</p>
+            <p className="text-white text-lg sm:text-xl font-bold">{gameState.zone}</p>
           </div>
           <div className="text-center">
-            <p className="text-gray-400 text-sm">Level</p>
-            <p className="text-white text-xl font-bold">{gameState.progression.level}</p>
+            <p className="text-gray-400 text-xs sm:text-sm">Level</p>
+            <p className="text-white text-lg sm:text-xl font-bold">{gameState.progression.level}</p>
           </div>
           <div className="text-center">
-            <p className="text-gray-400 text-sm">Accuracy</p>
-            <p className="text-white text-xl font-bold">
+            <p className="text-gray-400 text-xs sm:text-sm">Accuracy</p>
+            <p className="text-white text-lg sm:text-xl font-bold">
               {Math.round((gameState.statistics.correctAnswers / Math.max(gameState.statistics.totalQuestionsAnswered, 1)) * 100)}%
             </p>
           </div>
           <div className="text-center">
-            <p className="text-gray-400 text-sm">Achievements</p>
-            <p className="text-white text-xl font-bold">
+            <p className="text-gray-400 text-xs sm:text-sm">Achievements</p>
+            <p className="text-white text-lg sm:text-xl font-bold">
               {gameState.achievements.filter(a => a.unlocked).length}/{gameState.achievements.length}
             </p>
           </div>
@@ -309,7 +309,7 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       </div>
 
       {/* Footer */}
-      <div className="text-center text-gray-400 text-sm">
+      <div className="text-center text-gray-400 text-xs sm:text-sm">
         <p>💡 Tip: Each section contains detailed information and management tools!</p>
       </div>
     </div>
