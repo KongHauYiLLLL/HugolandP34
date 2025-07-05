@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Yellow glow effect for typing interfaces */
-.typing-interface {
-  position: relative;
-}
-
-.typing-interface::before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  width: 40px;
-  height: 40px;
-  background: radial-gradient(circle, rgba(255, 255, 0, 0.3) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-}
-
 /* Beautiful buttons */
 .beautiful-button {
   position: relative;
@@ -114,35 +96,10 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* GSAP animation classes */
-.gsap-fade-in {
+/* Start screen animation class */
+.start-screen-animate {
   opacity: 0;
   transform: translateY(20px);
-}
-
-.gsap-slide-in-left {
-  opacity: 0;
-  transform: translateX(-50px);
-}
-
-.gsap-slide-in-right {
-  opacity: 0;
-  transform: translateX(50px);
-}
-
-.gsap-scale-in {
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.gsap-rotate-in {
-  opacity: 0;
-  transform: rotate(-10deg) scale(0.9);
-}
-
-/* Enhanced input styling */
-input[type="text"], input[type="number"], input[type="password"], textarea {
-  @apply typing-interface;
 }
 
 /* Enhanced button styling */
