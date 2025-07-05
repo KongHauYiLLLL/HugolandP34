@@ -9,7 +9,7 @@ import { Mining } from './components/Mining';
 import { FloatingIcons } from './components/FloatingIcons';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 import { Shield, Package, User, Play, RotateCcw, Brain, Crown, Gift, Pickaxe, Menu, ArrowLeft } from 'lucide-react';
-import { animateButtonClick } from './utils/gsapAnimations';
+import { animateButtonClick, initGSAPAnimations } from './utils/gsapAnimations';
 
 // Lazy load heavy components
 import {
@@ -95,9 +95,25 @@ function App() {
   const [currentView, setCurrentView] = useState<GameView>('stats');
   const [currentModal, setCurrentModal] = useState<ModalView>(null);
   const [showWelcome, setShowWelcome] = useState(true);
+  const [gsapInitialized, setGsapInitialized] = useState(false);
 
-  // Add click animation to buttons only
+  // Initialize GSAP only once when component mounts
   useEffect(() => {
+    if (!gsapInitialized) {
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(() => {
+        initGSAPAnimations();
+        setGsapInitialized(true);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [gsapInitialized]);
+
+  // Add click animation to buttons only - but only after GSAP is initialized
+  useEffect(() => {
+    if (!gsapInitialized) return;
+
     const timer = setTimeout(() => {
       const buttons = document.querySelectorAll('button');
       
@@ -119,9 +135,10 @@ function App() {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [currentView, currentModal, gameState?.inCombat, showWelcome]);
+  }, [currentView, currentModal, gameState?.inCombat, showWelcome, gsapInitialized]);
 
-  if (isLoading) {
+  // Show loading screen while game state is loading
+  if (isLoading || !gameState) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
