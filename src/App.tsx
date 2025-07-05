@@ -96,28 +96,39 @@ function App() {
   const [currentModal, setCurrentModal] = useState<ModalView>(null);
   const [showWelcome, setShowWelcome] = useState(true);
 
-  // Initialize GSAP animations on component mount
+  // Initialize GSAP animations on component mount and when views change
   useEffect(() => {
+    // Small delay to ensure DOM elements are rendered
     const timer = setTimeout(() => {
       initGSAPAnimations();
-    }, 100);
+    }, 50);
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [currentView, currentModal, gameState?.inCombat, showWelcome]); // Re-run when view changes
 
-  // Add click animation to buttons
+  // Add click animation to buttons whenever the view changes
   useEffect(() => {
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-      button.addEventListener('click', () => animateButtonClick(button as HTMLElement));
-    });
-
-    return () => {
+    const timer = setTimeout(() => {
+      const buttons = document.querySelectorAll('button');
       buttons.forEach(button => {
-        button.removeEventListener('click', () => animateButtonClick(button as HTMLElement));
+        // Remove existing listeners to prevent duplicates
+        button.removeEventListener('click', handleButtonClick);
+        button.addEventListener('click', handleButtonClick);
       });
-    };
-  }, [currentView, currentModal]);
+
+      function handleButtonClick(this: HTMLElement) {
+        animateButtonClick(this);
+      }
+
+      return () => {
+        buttons.forEach(button => {
+          button.removeEventListener('click', handleButtonClick);
+        });
+      };
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [currentView, currentModal, gameState?.inCombat, showWelcome]);
 
   if (isLoading) {
     return (

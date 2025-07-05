@@ -5,56 +5,74 @@ export const initGSAPAnimations = () => {
   // Set default ease
   gsap.defaults({ ease: "power2.out" });
 
+  // Clear any existing animations first
+  gsap.killTweensOf('.gsap-fade-in, .gsap-slide-in-left, .gsap-slide-in-right, .gsap-scale-in, .gsap-rotate-in');
+
   // Fade in animation
-  gsap.set('.gsap-fade-in', { opacity: 0, y: 20 });
-  gsap.to('.gsap-fade-in', {
-    opacity: 1,
-    y: 0,
-    duration: 0.6,
-    stagger: 0.1,
-    delay: 0.2
-  });
+  const fadeElements = document.querySelectorAll('.gsap-fade-in');
+  if (fadeElements.length > 0) {
+    gsap.set(fadeElements, { opacity: 0, y: 20 });
+    gsap.to(fadeElements, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.1,
+      delay: 0.1
+    });
+  }
 
   // Slide in from left
-  gsap.set('.gsap-slide-in-left', { opacity: 0, x: -50 });
-  gsap.to('.gsap-slide-in-left', {
-    opacity: 1,
-    x: 0,
-    duration: 0.8,
-    stagger: 0.15,
-    delay: 0.3
-  });
+  const slideLeftElements = document.querySelectorAll('.gsap-slide-in-left');
+  if (slideLeftElements.length > 0) {
+    gsap.set(slideLeftElements, { opacity: 0, x: -50 });
+    gsap.to(slideLeftElements, {
+      opacity: 1,
+      x: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      delay: 0.2
+    });
+  }
 
   // Slide in from right
-  gsap.set('.gsap-slide-in-right', { opacity: 0, x: 50 });
-  gsap.to('.gsap-slide-in-right', {
-    opacity: 1,
-    x: 0,
-    duration: 0.8,
-    stagger: 0.15,
-    delay: 0.3
-  });
+  const slideRightElements = document.querySelectorAll('.gsap-slide-in-right');
+  if (slideRightElements.length > 0) {
+    gsap.set(slideRightElements, { opacity: 0, x: 50 });
+    gsap.to(slideRightElements, {
+      opacity: 1,
+      x: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      delay: 0.2
+    });
+  }
 
   // Scale in animation
-  gsap.set('.gsap-scale-in', { opacity: 0, scale: 0.8 });
-  gsap.to('.gsap-scale-in', {
-    opacity: 1,
-    scale: 1,
-    duration: 0.7,
-    stagger: 0.1,
-    delay: 0.4
-  });
+  const scaleElements = document.querySelectorAll('.gsap-scale-in');
+  if (scaleElements.length > 0) {
+    gsap.set(scaleElements, { opacity: 0, scale: 0.8 });
+    gsap.to(scaleElements, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.7,
+      stagger: 0.1,
+      delay: 0.3
+    });
+  }
 
   // Rotate in animation
-  gsap.set('.gsap-rotate-in', { opacity: 0, rotation: -10, scale: 0.9 });
-  gsap.to('.gsap-rotate-in', {
-    opacity: 1,
-    rotation: 0,
-    scale: 1,
-    duration: 0.8,
-    stagger: 0.12,
-    delay: 0.5
-  });
+  const rotateElements = document.querySelectorAll('.gsap-rotate-in');
+  if (rotateElements.length > 0) {
+    gsap.set(rotateElements, { opacity: 0, rotation: -10, scale: 0.9 });
+    gsap.to(rotateElements, {
+      opacity: 1,
+      rotation: 0,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.12,
+      delay: 0.4
+    });
+  }
 };
 
 // Animate element on hover
