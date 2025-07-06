@@ -312,4 +312,4 @@ export const Mining: React.FC<MiningProps> = ({
       )}
     </div>
   );
-};</Action>
+};
