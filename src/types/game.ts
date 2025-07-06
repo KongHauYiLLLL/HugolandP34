@@ -8,7 +8,6 @@ export interface GameState {
   currentEnemy: Enemy | null;
   inCombat: boolean;
   combatLog: string[];
-  research: Research;
   isPremium: boolean;
   achievements: Achievement[];
   collectionBook: CollectionBook;
@@ -37,12 +36,6 @@ export interface PlayerStats {
   baseAtk: number;
   baseDef: number;
   baseHp: number;
-}
-
-export interface Research {
-  level: number;
-  totalSpent: number;
-  availableUpgrades: ('atk' | 'def' | 'hp')[];
 }
 
 export interface Inventory {
@@ -348,12 +341,10 @@ export interface AdventureSkill {
 export interface TriviaQuestion {
   id: string;
   question: string;
-  type: 'multiple-choice' | 'type-answer' | 'slider' | 'reorder-words';
+  type: 'multiple-choice' | 'type-answer' | 'slider';
   options?: string[];
-  correctAnswer: number | string | number[];
+  correctAnswer: number | string;
   category: string;
   difficulty: 'easy' | 'medium' | 'hard';
   sliderRange?: { min: number; max: number };
-  wordsToReorder?: string[];
-  hint?: string;
 }

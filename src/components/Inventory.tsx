@@ -50,7 +50,7 @@ export const Inventory: React.FC<InventoryProps> = ({
 
   const renderEquippedSection = () => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
-      <div className="bg-black/30 p-3 sm:p-4 rounded-lg border border-orange-500/50">
+      <div className="bg-black/30 p-3 sm:p-4 rounded-xl border border-orange-500/50">
         <h3 className="text-white font-semibold mb-3 flex items-center gap-2 text-sm sm:text-base">
           <Sword className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />
           Equipped Weapon
@@ -92,7 +92,7 @@ export const Inventory: React.FC<InventoryProps> = ({
         )}
       </div>
 
-      <div className="bg-black/30 p-3 sm:p-4 rounded-lg border border-blue-500/50">
+      <div className="bg-black/30 p-3 sm:p-4 rounded-xl border border-blue-500/30">
         <h3 className="text-white font-semibold mb-3 flex items-center gap-2 text-sm sm:text-base">
           <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
           Equipped Armor
@@ -470,4 +470,4 @@ export const Inventory: React.FC<InventoryProps> = ({
       </div>
     </div>
   );
-};</Action>
+};
