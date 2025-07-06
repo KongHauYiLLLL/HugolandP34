@@ -44,11 +44,6 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
   const secondsLeft = Math.floor((timeUntilRefresh % 60000) / 1000);
 
   const handlePurchase = (relic: RelicItem) => {
-    if (equippedRelicsCount >= 5) {
-      alert('You can only have 5 relics equipped at once! Sell or unequip some first.');
-      return;
-    }
-    
     const success = onPurchaseRelic(relic.id);
     if (success) {
       setSelectedRelic(null);
@@ -92,8 +87,8 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
           </div>
           <div className="text-center">
             <p className="text-gray-300 text-sm">
-              Equipped Relics: {equippedRelicsCount}/5 | 
-              <span className="text-red-400 ml-1">Relics cannot be sold for coins or gems</span>
+              Equipped Relics: {equippedRelicsCount} | 
+              <span className="text-green-400 ml-1">Unlimited relics can be equipped!</span>
             </p>
             <p className="text-blue-400 text-xs mt-1">
               ⏰ Market refreshes every 5 minutes with new relics!
@@ -148,18 +143,16 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
 
               <button
                 onClick={() => handlePurchase(relic)}
-                disabled={gems < relic.cost || equippedRelicsCount >= 5}
+                disabled={gems < relic.cost}
                 className={`w-full py-2 rounded-lg font-semibold transition-all text-sm ${
-                  gems >= relic.cost && equippedRelicsCount < 5
+                  gems >= relic.cost
                     ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500'
                     : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                {equippedRelicsCount >= 5 
-                  ? 'Relic Limit Reached' 
-                  : gems >= relic.cost 
-                    ? 'Purchase Relic' 
-                    : 'Not Enough Gems'
+                {gems >= relic.cost 
+                  ? 'Purchase & Absorb Power' 
+                  : 'Not Enough Gems'
                 }
               </button>
             </div>
@@ -179,6 +172,7 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
           <p>The Yojef Market deals in ancient artifacts of immense power.</p>
           <p>These relics cannot be found in regular chests and hold secrets from forgotten ages.</p>
           <p className="text-yellow-400 mt-2">🕐 Refreshes every 5 minutes with new inventory!</p>
+          <p className="text-green-400 mt-1">💪 Equip unlimited relics to absorb their combined power!</p>
         </div>
       </div>
     </div>

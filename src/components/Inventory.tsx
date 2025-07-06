@@ -234,53 +234,87 @@ export const Inventory: React.FC<InventoryProps> = ({
 
   const renderRelicGrid = () => (
     <div className="space-y-4">
-      {/* Equipped Relics */}
-      <div>
+      {/* Absorbed Relics Power Display */}
+      <div className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 p-4 rounded-lg border border-indigo-500/50">
         <h3 className="text-white font-semibold mb-3 flex items-center gap-2 text-sm sm:text-base">
           <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
-          Equipped Relics ({inventory.equippedRelics.length}/5)
+          Absorbed Relic Power ({inventory.equippedRelics.length} relics)
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
-          {inventory.equippedRelics.map((relic) => (
-            <div key={relic.id} className="bg-gradient-to-br from-indigo-900/50 to-purple-900/50 p-3 sm:p-4 rounded-lg border-2 border-indigo-500/50">
-              <div className="flex items-center gap-2 mb-2">
-                {relic.type === 'weapon' ? (
-                  <Sword className="w-4 h-4 text-orange-400" />
-                ) : (
-                  <Shield className="w-4 h-4 text-blue-400" />
-                )}
-                <h4 className="text-white font-bold text-sm">{relic.name}</h4>
-              </div>
-              <p className="text-gray-300 text-xs mb-2">{relic.description}</p>
-              <p className="text-white text-sm mb-2">
-                {relic.type === 'weapon' ? `ATK: ${relic.baseAtk! + (relic.level - 1) * 22}` : `DEF: ${relic.baseDef! + (relic.level - 1) * 15}`}
-              </p>
-              <p className="text-gray-300 text-xs mb-3">Level {relic.level}</p>
-              
-              <div className="flex gap-2">
-                <button
-                  onClick={() => onUpgradeRelic(relic.id)}
-                  disabled={gems < relic.upgradeCost}
-                  className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all flex items-center gap-1 justify-center ${
-                    gems >= relic.upgradeCost
-                      ? 'bg-purple-600 text-white hover:bg-purple-500'
-                      : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                  }`}
-                >
-                  <Gem className="w-3 h-3" />
-                  {relic.upgradeCost}
-                </button>
-                <button
-                  onClick={() => onUnequipRelic(relic.id)}
-                  className="flex-1 px-2 py-1 text-xs rounded font-semibold bg-red-600 text-white hover:bg-red-500 transition-all"
-                >
-                  Unequip
-                </button>
-              </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="text-center bg-black/30 p-3 rounded-lg">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <Sword className="w-4 h-4 text-orange-400" />
+              <span className="text-orange-400 font-semibold text-sm">Total ATK</span>
             </div>
-          ))}
+            <p className="text-white font-bold text-lg">
+              +{inventory.equippedRelics
+                .filter(r => r.type === 'weapon')
+                .reduce((total, relic) => total + (relic.baseAtk! + (relic.level - 1) * 22), 0)}
+            </p>
+          </div>
+          <div className="text-center bg-black/30 p-3 rounded-lg">
+            <div className="flex items-center justify-center gap-2 mb-1">
+              <Shield className="w-4 h-4 text-blue-400" />
+              <span className="text-blue-400 font-semibold text-sm">Total DEF</span>
+            </div>
+            <p className="text-white font-bold text-lg">
+              +{inventory.equippedRelics
+                .filter(r => r.type === 'armor')
+                .reduce((total, relic) => total + (relic.baseDef! + (relic.level - 1) * 15), 0)}
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* Equipped Relics */}
+      {inventory.equippedRelics.length > 0 && (
+        <div>
+          <h3 className="text-white font-semibold mb-3 flex items-center gap-2 text-sm sm:text-base">
+            <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
+            Equipped Relics (Power Absorbed)
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 max-h-64 overflow-y-auto">
+            {inventory.equippedRelics.map((relic) => (
+              <div key={relic.id} className="bg-gradient-to-br from-indigo-900/50 to-purple-900/50 p-3 sm:p-4 rounded-lg border-2 border-indigo-500/50">
+                <div className="flex items-center gap-2 mb-2">
+                  {relic.type === 'weapon' ? (
+                    <Sword className="w-4 h-4 text-orange-400" />
+                  ) : (
+                    <Shield className="w-4 h-4 text-blue-400" />
+                  )}
+                  <h4 className="text-white font-bold text-sm">{relic.name}</h4>
+                </div>
+                <p className="text-gray-300 text-xs mb-2">{relic.description}</p>
+                <p className="text-white text-sm mb-2">
+                  {relic.type === 'weapon' ? `ATK: ${relic.baseAtk! + (relic.level - 1) * 22}` : `DEF: ${relic.baseDef! + (relic.level - 1) * 15}`}
+                </p>
+                <p className="text-gray-300 text-xs mb-3">Level {relic.level}</p>
+                
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => onUpgradeRelic(relic.id)}
+                    disabled={gems < relic.upgradeCost}
+                    className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all flex items-center gap-1 justify-center ${
+                      gems >= relic.upgradeCost
+                        ? 'bg-purple-600 text-white hover:bg-purple-500'
+                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    }`}
+                  >
+                    <Gem className="w-3 h-3" />
+                    {relic.upgradeCost}
+                  </button>
+                  <button
+                    onClick={() => onUnequipRelic(relic.id)}
+                    className="flex-1 px-2 py-1 text-xs rounded font-semibold bg-red-600 text-white hover:bg-red-500 transition-all"
+                  >
+                    Unequip
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Unequipped Relics */}
       {inventory.relics.filter(r => !inventory.equippedRelics.some(er => er.id === r.id)).length > 0 && (
@@ -309,14 +343,9 @@ export const Inventory: React.FC<InventoryProps> = ({
                 <div className="flex gap-2">
                   <button
                     onClick={() => onEquipRelic(relic.id)}
-                    disabled={inventory.equippedRelics.length >= 5}
-                    className={`flex-1 px-2 py-1 text-xs rounded font-semibold transition-all ${
-                      inventory.equippedRelics.length < 5
-                        ? 'bg-indigo-600 text-white hover:bg-indigo-500'
-                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                    }`}
+                    className="flex-1 px-2 py-1 text-xs rounded font-semibold transition-all bg-indigo-600 text-white hover:bg-indigo-500"
                   >
-                    {inventory.equippedRelics.length >= 5 ? 'Limit Reached' : 'Equip'}
+                    Equip & Absorb
                   </button>
                   <button
                     onClick={() => onSellRelic(relic.id)}
@@ -434,11 +463,11 @@ export const Inventory: React.FC<InventoryProps> = ({
           </p>
           <div className="text-xs text-gray-400 space-y-1">
             <p>• <strong>Enchanted Items:</strong> 5% chance from chests, double ATK/DEF</p>
-            <p>• <strong>Relics:</strong> Powerful ancient items from the Yojef Market (max 5 equipped) - 1.5x stronger!</p>
+            <p>• <strong>Relics:</strong> Powerful ancient items - equip unlimited relics to absorb their power!</p>
             <p>• <strong>Durability:</strong> Items lose durability in combat and become less effective</p>
           </div>
         </div>
       </div>
     </div>
   );
-};
+};</Action>
